@@ -1,0 +1,35 @@
+﻿@model Enterwell_Faruk_Obradovic.ViewModels.InvoiceViewModel
+
+
+<h2 style="margin-bottom: 50px;">Naziv stavke: @Model.Stavka.Naziv</h2>
+<h3>Cijena: @Model.Stavka.CijenaBezPDV KM</h3>
+<p>Opis artikla: @Model.Stavka.Opis</p>
+<div class="row">
+    <div class="col-md-4" style="padding-top: 50px;">
+        <section>
+            <input hidden asp-for="@Model.StavkaID"/>
+            <form method="post">
+                <h4>Unesite podatke.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="@Model.Kolicina"></label>
+                    <input asp-for="@Model.Kolicina" class="form-control" />
+                    <span asp-validation-for="@Model.Kolicina" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.SelectedPDV"></label>
+                    <select asp-items="@Model.SelectListPDV" class="form-control" asp-for="@Model.SelectedPDV"></select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Potvrdi</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

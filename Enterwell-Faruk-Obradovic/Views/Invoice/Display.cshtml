@@ -1,0 +1,45 @@
+﻿@model Enterwell_Faruk_Obradovic.ViewModels.InvoiceDisplayViewModel
+
+@{ 
+    ViewData["Title"] = "Pregled fakture " + Model.Invoice.BrojFakture;
+}
+
+<h1 style="margin-bottom: 50px;">Pregled fakture</h1>
+
+<div style="margin-bottom: 50px;">
+    <p style="font-size:20px"><span style="font-weight:600">Ukupno sa PDV: </span>@String.Format("{0:0.##}", @Model.Invoice.UkupnoSaPDV) KM</p>
+    <p><span style="font-weight:600">Ukupno bez PDV: </span>@String.Format("{0:0.##}", @Model.Invoice.UkupnoBezPDV) KM</p>
+    <p><span style="font-weight:600">Broj fakture: </span>@Model.Invoice.BrojFakture</p>
+    <p><span style="font-weight:600">Datum keriranja: </span>@Model.Invoice.DatumKreiranja.ToString("d")</p>
+    <p><span style="font-weight:600">Datum isporuke: </span>@Model.Invoice.DatumDospijeca.ToString("d")</p>
+
+    <p><span style="font-weight:600">Ime i prezime naručioca: </span>@Model.Invoice.Korisnik.ImePrezime</p>
+    <p><span style="font-weight:600">Adresa isporuke: </span>@Model.Invoice.Korisnik.Grad @Model.Invoice.Korisnik.Adresa</p>
+</div>
+
+<h3 style="margin-bottom: 50px;">Pregled kupljenih stavki</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Naziv stavke</th>
+            <th scope="col">Količina</th>
+            <th scope="col">Cijena sa PDV</th>
+            <th scope="col">Ukupno</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in Model.Invoice.Stavke)
+        {
+            var ukupno = @i.Kolicina * @i.CijenaSaPDV;
+
+        <tr>
+            <td>@i.Stavka.Naziv</td>
+            <td>@i.Kolicina</td>
+            <td>@String.Format("{0:0.##}", i.CijenaSaPDV) KM</td>
+            <td>@String.Format("{0:0.##}", ukupno) KM</td>
+            
+        </tr>
+        }
+    </tbody>
+</table>

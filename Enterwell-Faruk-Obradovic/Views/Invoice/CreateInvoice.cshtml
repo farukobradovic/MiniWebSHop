@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Narudžba stavki";
+}
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model Enterwell_Faruk_Obradovic.ViewModels.InvoiceViewModel
+
+@{
+    var a = Context.Session.GetString("data");
+}
+
+<h2 style="margin-bottom:30px;">Pregled svih stavki</h2>
+
+@if (Model.SesijaLista.Count() > 0)
+{
+    <p><span style="font-weight:600;">Trenutno kupljeno:</span> @Model.SesijaLista.Count() stavka/i.</p>
+}
+
+
+<form method="post">
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-gap:10px; margin-bottom: 30px;">
+        @foreach (var i in Model.Stavke)
+        {
+            <a class="card" asp-action="BuyProduct" asp-controller="Invoice"
+               asp-route-StavkaID="@i.StavkaID" style="padding:20px; text-align:center;">@i.Naziv</a>
+        }
+    </div>
+    <button class="btn btn-success">Potvrdi narudžbu</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
